@@ -22,5 +22,4 @@ app.set("view engine", "ejs");
 //To use our router to load the home page
 app.use("/", router);
 
-//To listen to port 3000
-app.listen(3000);
+module.exports = app;
