@@ -3,6 +3,12 @@ const app = express();
 
 const router = require("./router");
 
+//Boiler plate code: To tell express, to add the user submitted data on to our request object, for us to access it using req.body
+//HTML form submit
+app.use(express.urlencoded({ extended: false }));
+//Sending over json data
+app.use(express.json());
+
 //To use our folder 'public'
 app.use(express.static("public"));
 /**
