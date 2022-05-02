@@ -12,7 +12,7 @@ async function start() {
 
   //To listen to the port 3000 only after we established connection with db
   const app = require("./app");
-  app.listen(3000);
+  app.listen(process.env.PORT);
 }
 
 start();
