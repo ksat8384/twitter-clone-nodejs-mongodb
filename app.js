@@ -1,5 +1,15 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
+
+//Boiler plate code: session configuration
+let sessionOptions = session({
+  secret: "JavaScript is sooo cool",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
+});
+app.use(sessionOptions);
 
 const router = require("./router");
 
@@ -9,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 //Sending over json data
 app.use(express.json());
 
-//To use our folder 'public'
+//To use our folder 'public' for our views
 app.use(express.static("public"));
 /**
  * To set views configuration option to our folder 'views'.

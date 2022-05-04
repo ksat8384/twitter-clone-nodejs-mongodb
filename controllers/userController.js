@@ -11,6 +11,8 @@ exports.login = function (req, res) {
   user
     .login()
     .then(function (result) {
+      //To let our server remember session data in memory
+      req.session.user = { favColor: "blue", username: user.data.username };
       res.send(result);
     })
     .catch(function (error) {
@@ -31,6 +33,11 @@ exports.register = function (req, res) {
 };
 
 exports.home = function (req, res) {
-  //To render our home page template
-  res.render("home-guest");
+  //If session exist
+  if (req.session.user) {
+    res.send("Welcome to the actual application!!!");
+  } else {
+    //To render our home page template
+    res.render("home-guest");
+  }
 };
