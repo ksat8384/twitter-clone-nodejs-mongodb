@@ -1,3 +1,5 @@
+//Hashing package
+const bcrypt = require("bcryptjs");
 const usersCollection = require("../db").collection("users");
 
 const validator = require("validator");
@@ -65,7 +67,11 @@ User.prototype.login = function () {
       .findOne({ username: this.data.username })
       .then((attemptedUser) => {
         //attemptedUser only evaluates to true if there is a matching username
-        if (attemptedUser && attemptedUser.password == this.data.password) {
+        //Using bcrypt to compare the hashed value with the password provided. It will hash the password provided for comparison.
+        if (
+          attemptedUser &&
+          bcrypt.compareSync(this.data.password, attemptedUser.password)
+        ) {
           resolve("Congrats!");
         } else {
           reject("Invalid username / password.");
@@ -84,6 +90,9 @@ User.prototype.register = function () {
   //Step #2: Only if there are no validation errors
   //then save the user data into a database
   if (!this.errors.length) {
+    //hash user password
+    let salt = bcrypt.genSaltSync(10);
+    this.data.password = bcrypt.hashSync(this.data.password, salt);
     //To insert in db
     usersCollection.insertOne(this.data);
   }
