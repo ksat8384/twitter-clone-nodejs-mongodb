@@ -7,11 +7,15 @@ const User = require("../models/User");
 
 exports.login = function (req, res) {
   let user = new User(req.body);
-  //Passing a callback function to wait until we get a response for login from mongo db
   //Modern approach is promise based instead of traditional callback
-  user.login(function (result) {
-    res.send(result);
-  });
+  user
+    .login()
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (error) {
+      res.send(error);
+    });
 };
 
 exports.logout = function () {};
