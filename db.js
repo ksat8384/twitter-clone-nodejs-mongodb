@@ -8,7 +8,7 @@ const client = new MongoClient(process.env.CONNECTIONSTRING);
 
 async function start() {
   await client.connect();
-  module.exports = client.db();
+  module.exports = client;
 
   //To listen to the port 3000 only after we established connection with db
   const app = require("./app");

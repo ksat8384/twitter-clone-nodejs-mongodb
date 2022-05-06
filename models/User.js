@@ -1,6 +1,6 @@
 //Hashing package
 const bcrypt = require("bcryptjs");
-const usersCollection = require("../db").collection("users");
+const usersCollection = require("../db").db().collection("users");
 
 const validator = require("validator");
 

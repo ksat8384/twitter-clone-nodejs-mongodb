@@ -1,10 +1,12 @@
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const app = express();
 
 //Boiler plate code: session configuration
 let sessionOptions = session({
   secret: "JavaScript is sooo cool",
+  store: MongoStore.create({ client: require("./db") }),
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
