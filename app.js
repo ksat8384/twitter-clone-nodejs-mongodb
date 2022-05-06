@@ -1,6 +1,8 @@
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+//Flash package helps us to add or remove data from session
+const flash = require("connect-flash");
 const app = express();
 
 //Boiler plate code: session configuration
@@ -12,6 +14,8 @@ let sessionOptions = session({
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
 });
 app.use(sessionOptions);
+//To show flash message if the user credentials entered are wrong during login attempt
+app.use(flash());
 
 const router = require("./router");
 
