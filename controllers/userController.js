@@ -35,7 +35,7 @@ exports.register = function (req, res) {
 exports.home = function (req, res) {
   //If session exist
   if (req.session.user) {
-    res.send("Welcome to the actual application!!!");
+    res.render("./home-dashboard", { username: req.session.user.username });
   } else {
     //To render our home page template
     res.render("home-guest");
