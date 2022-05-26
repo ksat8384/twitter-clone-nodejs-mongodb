@@ -13,7 +13,7 @@ exports.login = function (req, res) {
     .then(function (result) {
       //To let our server remember session data in memory
       //Updating session data in database
-      req.session.user = { favColor: "blue", username: user.data.username };
+      req.session.user = { avatar: user.avatar, username: user.data.username };
       //To only redirect after the session data is saved in the database
       req.session.save(function () {
         res.redirect("/");
@@ -44,7 +44,7 @@ exports.register = function (req, res) {
     .register()
     .then(() => {
       //setting the session data
-      req.session.user = { username: user.data.username };
+      req.session.user = { username: user.data.username, avatar: user.avatar };
       req.session.save(function () {
         res.redirect("/");
       });
@@ -62,7 +62,10 @@ exports.register = function (req, res) {
 exports.home = function (req, res) {
   //If session exist
   if (req.session.user) {
-    res.render("./home-dashboard", { username: req.session.user.username });
+    res.render("./home-dashboard", {
+      username: req.session.user.username,
+      avatar: req.session.user.avatar,
+    });
   } else {
     //To render our home page template
     //The second parameter, object is to show error once if there is an invalid login attempt
