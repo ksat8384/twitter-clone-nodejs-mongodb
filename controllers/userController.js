@@ -42,7 +42,12 @@ exports.register = function (req, res) {
   let user = new User(req.body);
   user.register();
   if (user.errors.length) {
-    res.send(user.errors);
+    user.errors.forEach(function (error) {
+      req.flash("regErrors", error);
+    });
+    req.session.save(function () {
+      res.redirect("/");
+    });
   } else {
     res.send("Congrats, there are no errors.");
   }
@@ -56,6 +61,9 @@ exports.home = function (req, res) {
     //To render our home page template
     //The second parameter, object is to show error once if there is an invalid login attempt
     //As soon as we access the flash object to retrieve the collection, it will remove that from the session
-    res.render("home-guest", { errors: req.flash("errors") });
+    res.render("home-guest", {
+      errors: req.flash("errors"),
+      regErrors: req.flash("regErrors"),
+    });
   }
 };
