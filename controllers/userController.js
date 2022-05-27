@@ -73,10 +73,7 @@ exports.register = function (req, res) {
 exports.home = function (req, res) {
   //If session exist
   if (req.session.user) {
-    res.render("./home-dashboard", {
-      username: req.session.user.username,
-      avatar: req.session.user.avatar,
-    });
+    res.render("./home-dashboard");
   } else {
     //To render our home page template
     //The second parameter, object is to show error once if there is an invalid login attempt
