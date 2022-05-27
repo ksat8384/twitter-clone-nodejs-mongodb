@@ -17,6 +17,12 @@ app.use(sessionOptions);
 //To show flash message if the user credentials entered are wrong during login attempt
 app.use(flash());
 
+//To tell express to run this function for every request
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
+
 const router = require("./router");
 
 //Boiler plate code: To tell express, to add the user submitted data on to our request object, for us to access it using req.body
