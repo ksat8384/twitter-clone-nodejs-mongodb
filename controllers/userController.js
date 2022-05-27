@@ -5,6 +5,17 @@
 const { urlencoded } = require("express");
 const User = require("../models/User");
 
+exports.mustBeLoggedIn = function (req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.flash("errors", "You must be logged in to perform that action.");
+    req.session.save(function () {
+      res.redirect("/");
+    });
+  }
+};
+
 exports.login = function (req, res) {
   let user = new User(req.body);
   //Modern approach is promise based instead of traditional callback
