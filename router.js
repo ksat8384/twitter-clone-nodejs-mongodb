@@ -27,5 +27,7 @@ router.post(
   userController.mustBeLoggedIn,
   postController.create
 );
+//colon helps to use id dynamically
+router.get("/post/:id", postController.viewSingle);
 
 module.exports = router;
