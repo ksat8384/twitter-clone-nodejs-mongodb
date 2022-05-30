@@ -24,7 +24,11 @@ exports.login = function (req, res) {
     .then(function (result) {
       //To let our server remember session data in memory
       //Updating session data in database
-      req.session.user = { avatar: user.avatar, username: user.data.username };
+      req.session.user = {
+        avatar: user.avatar,
+        username: user.data.username,
+        _id: user.data._id,
+      };
       //To only redirect after the session data is saved in the database
       req.session.save(function () {
         res.redirect("/");
@@ -55,7 +59,11 @@ exports.register = function (req, res) {
     .register()
     .then(() => {
       //setting the session data
-      req.session.user = { username: user.data.username, avatar: user.avatar };
+      req.session.user = {
+        username: user.data.username,
+        avatar: user.avatar,
+        _id: user.data._id,
+      };
       req.session.save(function () {
         res.redirect("/");
       });
