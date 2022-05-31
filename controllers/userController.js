@@ -106,5 +106,9 @@ exports.ifUserExists = function (req, res, next) {
 };
 
 exports.profilePostsScreen = function (req, res) {
-  res.render("profile");
+  res.render("profile", {
+    //Fetching the data saved in req object in the above IfUserExists function
+    profileUsername: req.profileUser.username,
+    profileAvatar: req.profileUser.avatar,
+  });
 };
