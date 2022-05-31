@@ -19,6 +19,13 @@ app.use(flash());
 
 //To tell express to run this function for every request
 app.use(function (req, res, next) {
+  //make current user id available on the req object
+  if (req.session.user) {
+    req.visitorId = req.session.user._id;
+  } else {
+    req.visitorId = 0;
+  }
+  //make user session data available from within view template
   res.locals.user = req.session.user;
   next();
 });
