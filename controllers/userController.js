@@ -92,3 +92,11 @@ exports.home = function (req, res) {
     });
   }
 };
+
+exports.ifUserExists = function (req, res, next) {
+  next();
+};
+
+exports.profilePostsScreen = function (req, res) {
+  res.render("profile");
+};
