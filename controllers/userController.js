@@ -94,7 +94,15 @@ exports.home = function (req, res) {
 };
 
 exports.ifUserExists = function (req, res, next) {
-  next();
+  User.findByUsername(req.params.username)
+    .then(function (userDocument) {
+      //Storing the userDocument in the req object, so that we could access it in the below profilePostsScreen function
+      req.profileUser = userDocument;
+      next();
+    })
+    .catch(function () {
+      res.render("404");
+    });
 };
 
 exports.profilePostsScreen = function (req, res) {
