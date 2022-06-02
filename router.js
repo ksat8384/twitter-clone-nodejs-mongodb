@@ -36,5 +36,6 @@ router.post(
 );
 //colon helps to use id dynamically
 router.get("/post/:id", postController.viewSingle);
+router.get("/post/:id/edit", postController.viewEditScreen);
 
 module.exports = router;
