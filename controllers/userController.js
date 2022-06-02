@@ -85,10 +85,8 @@ exports.home = function (req, res) {
     res.render("./home-dashboard");
   } else {
     //To render our home page template
-    //The second parameter, object is to show error once if there is an invalid login attempt
     //As soon as we access the flash object to retrieve the collection, it will remove that from the session
     res.render("home-guest", {
-      errors: req.flash("errors"),
       regErrors: req.flash("regErrors"),
     });
   }
