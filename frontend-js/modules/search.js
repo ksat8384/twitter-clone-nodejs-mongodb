@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default class Search {
   //1. select DOM elements, and keep track of any useful data
@@ -37,11 +37,14 @@ export default class Search {
   }
 
   sendRequest() {
-    axios.post("/search", { searchTerm: this.inputField.value }).then(() => { 
-
-    }).catch(() => { 
-        alert("Hello, the request failed.")
-    })
+    axios
+      .post("/search", { searchTerm: this.inputField.value })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(() => {
+        alert("Hello, the request failed.");
+      });
   }
 
   showLoaderIcon() {
