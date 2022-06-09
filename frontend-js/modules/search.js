@@ -27,7 +27,7 @@ export default class Search {
   //3. Methods
   keyPressHandler() {
     let value = this.inputField.value;
-    //To avoid showing loader icon and results area if the user clears the search term after typing something which would have triggered the search process
+    //To avoid showing loader icon and results area if the user clears the search term after typing something
     if (value == "") {
       clearTimeout(this.typingWaitTimer);
       this.hideLoaderIcon();
@@ -38,7 +38,7 @@ export default class Search {
       clearTimeout(this.typingWaitTimer);
       this.showLoaderIcon();
       this.hideResultsArea();
-      this.typingWaitTimer = setTimeout(() => this.sendRequest(), 3000);
+      this.typingWaitTimer = setTimeout(() => this.sendRequest(), 750);
     }
     this.previousValue = value;
   }
