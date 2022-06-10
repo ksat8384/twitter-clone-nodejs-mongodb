@@ -139,3 +139,19 @@ exports.profilePostsScreen = function (req, res) {
       res.render("404");
     });
 };
+
+exports.profileFollowersScreen = async function (req, res) {
+  try {
+    let followers = await Follow.getFollowersById(req.profileUser._id);
+    res.render("profile-followers", {
+      followers: followers,
+      //Fetching the data saved in req object in the above IfUserExists function
+      profileUsername: req.profileUser.username,
+      profileAvatar: req.profileUser.avatar,
+      isFollowing: req.isFollowing,
+      isVisitorsProfile: req.isVisitorsProfile,
+    });
+  } catch {
+    res.render("404");
+  }
+};
