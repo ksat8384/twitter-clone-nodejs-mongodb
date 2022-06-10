@@ -28,16 +28,16 @@
   <a
     href="/profile/<%= profileUsername %>"
     class="profile-nav-link nav-item nav-link <%= currentPage == 'posts'? 'active' : '' %>"
-    >Posts: 3</a
+    >Posts: <%= counts.postCount %></a
   >
   <a
     href="/profile/<%= profileUsername %>/followers"
     class="profile-nav-link nav-item nav-link <%= currentPage == 'followers'? 'active' : '' %>"
-    >Followers: 3</a
+    >Followers: <%= counts.followerCount %></a
   >
   <a
     href="/profile/<%= profileUsername %>/following"
     class="profile-nav-link nav-item nav-link <%= currentPage == 'following'? 'active' : '' %>"
-    >Following: 2</a
+    >Following: <%= counts.followingCount %></a
   >
 </div>
