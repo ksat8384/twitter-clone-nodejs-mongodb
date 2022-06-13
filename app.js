@@ -95,9 +95,12 @@ io.on("connection", function (socket) {
   //only if the user is logged in
   if (socket.request.session.user) {
     let user = socket.request.session.user;
+
+    socket.emit("welcome", { username: user.username, avatar: user.avatar });
+
     socket.on("chatMessageFromBrowser", function (data) {
       //emitting to all connected users
-      io.emit("chatMessageFromServer", {
+      socket.broadcast.emit("chatMessageFromServer", {
         message: data.message,
         username: user.username,
         avatar: user.avatar,
