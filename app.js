@@ -101,7 +101,10 @@ io.on("connection", function (socket) {
     socket.on("chatMessageFromBrowser", function (data) {
       //emitting to all connected users
       socket.broadcast.emit("chatMessageFromServer", {
-        message: data.message,
+        message: sanitizeHTML(data.message, {
+          allowedTags: [],
+          allowedAttributes: {},
+        }),
         username: user.username,
         avatar: user.avatar,
       });
