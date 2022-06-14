@@ -36,6 +36,20 @@ export default class RegistrationForm {
     this.email.addEventListener("keyup", () => {
       this.isDifferent(this.email, this.emailHandler);
     });
+
+    //Runs when a field loses focus
+    //This listener is to avoid validation check, if the user shifts focus instantly after entering an invalid character
+    this.password.addEventListener("blur", () => {
+      this.isDifferent(this.password, this.passwordHandler);
+    });
+
+    this.username.addEventListener("blur", () => {
+      this.isDifferent(this.username, this.usernameHandler);
+    });
+
+    this.email.addEventListener("blur", () => {
+      this.isDifferent(this.email, this.emailHandler);
+    });
   }
 
   //Methods
