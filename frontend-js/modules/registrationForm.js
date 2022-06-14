@@ -8,6 +8,8 @@ export default class RegistrationForm {
     this.insertValidationElements();
     this.username = document.querySelector("#username-register");
     this.username.previousValue = "";
+    this.email = document.querySelector("#email-register");
+    this.email.previousValue = "";
     this.events();
   }
 
@@ -15,6 +17,10 @@ export default class RegistrationForm {
   events() {
     this.username.addEventListener("keyup", () => {
       this.isDifferent(this.username, this.usernameHandler);
+    });
+
+    this.email.addEventListener("keyup", () => {
+      this.isDifferent(this.email, this.emailHandler);
     });
   }
 
@@ -31,7 +37,13 @@ export default class RegistrationForm {
     this.username.errors = false;
     this.usernameImmediately();
     clearTimeout(this.username.timer);
-    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000);
+    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 800);
+  }
+
+  emailHandler() {
+    this.email.errors = false;
+    clearTimeout(this.email.timer);
+    this.email.timer = setTimeout(() => this.emailAfterDelay(), 800);
   }
 
   usernameImmediately() {
@@ -67,6 +79,15 @@ export default class RegistrationForm {
 
   hideValidationError(el) {
     el.nextElementSibling.classList.remove("liveValidateMessage--visible");
+  }
+
+  emailAfterDelay() {
+    if (!/^\S+@\S+$/.test(this.email.value)) {
+      this.showValidationError(
+        this.email,
+        "You must provide a valid email address."
+      );
+    }
   }
 
   usernameAfterDelay() {
