@@ -8,6 +8,16 @@ const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 const { post } = require("../router");
 
+exports.doesUsernameExist = function (req, res) {
+  User.findByUsername(req.body.username)
+    .then(() => {
+      res.json(true);
+    })
+    .catch(() => {
+      res.json(false);
+    });
+};
+
 exports.sharedProfileData = async function (req, res, next) {
   let isVisitorsProfile = false;
   let isFollowing = false;
