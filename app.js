@@ -4,6 +4,7 @@ const MongoStore = require("connect-mongo");
 //Flash package helps us to add or remove data from session
 const flash = require("connect-flash");
 const markdown = require("marked");
+const csrf = require("csurf");
 const app = express();
 const sanitizeHTML = require("sanitize-html");
 
@@ -78,8 +79,27 @@ app.set("views", "views");
 //To let express know which templating engine we are using. Here we are using ejs engine
 app.set("view engine", "ejs");
 
+//To avoid Cross site request forgery(CSRF) attack
+//Any req that modifies state must have csrf token, else request will be rejected
+app.use(csrf());
+app.use(function (req, res, next) {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 //To use our router to load the home page
 app.use("/", router);
+
+app.use(function (err, req, res, next) {
+  if (err) {
+    if (err.code == "EBADCSRFTOKEN") {
+      req.flash("errors", "Cross site request forgery detected.");
+      req.session.save(() => res.redirect("/"));
+    } else {
+      res.render("404");
+    }
+  }
+});
 
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
