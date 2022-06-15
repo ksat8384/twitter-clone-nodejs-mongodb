@@ -8,6 +8,16 @@ const csrf = require("csurf");
 const app = express();
 const sanitizeHTML = require("sanitize-html");
 
+//Boiler plate code: To tell express, to add the user submitted data on to our request object, for us to access it using req.body
+//HTML form submit
+app.use(express.urlencoded({ extended: false }));
+//Sending over json data
+app.use(express.json());
+
+//Creating API routes
+//For /api routes, we will be using "router-api"
+app.use("/api", require("./router-api"));
+
 //Boiler plate code: session configuration
 let sessionOptions = session({
   secret: "JavaScript is sooo cool",
@@ -62,12 +72,6 @@ app.use(function (req, res, next) {
 });
 
 const router = require("./router");
-
-//Boiler plate code: To tell express, to add the user submitted data on to our request object, for us to access it using req.body
-//HTML form submit
-app.use(express.urlencoded({ extended: false }));
-//Sending over json data
-app.use(express.json());
 
 //To use our folder 'public' for our views
 app.use(express.static("public"));
