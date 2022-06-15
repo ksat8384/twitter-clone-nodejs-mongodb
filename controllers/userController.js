@@ -6,7 +6,7 @@ const { urlencoded } = require("express");
 const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
-const { post } = require("../router");
+// const { post } = require("../router");
 
 exports.doesEmailExist = async function (req, res) {
   let emailBool = await User.doesEmailExist(req.body.email);
@@ -64,6 +64,19 @@ exports.mustBeLoggedIn = function (req, res, next) {
       res.redirect("/");
     });
   }
+};
+
+exports.apiLogin = function (req, res) {
+  let user = new User(req.body);
+  //Modern approach is promise based instead of traditional callback
+  user
+    .login()
+    .then(function (result) {
+      res.json("Good job, that is a real username and password.");
+    })
+    .catch(function (error) {
+      res.json("Sorry, your values are not correct.");
+    });
 };
 
 exports.login = function (req, res) {
