@@ -6,7 +6,7 @@ const { urlencoded } = require("express");
 const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
-// const { post } = require("../router");
+const jwt = require("jsonwebtoken");
 
 exports.doesEmailExist = async function (req, res) {
   let emailBool = await User.doesEmailExist(req.body.email);
@@ -72,7 +72,11 @@ exports.apiLogin = function (req, res) {
   user
     .login()
     .then(function (result) {
-      res.json("Good job, that is a real username and password.");
+      res.json(
+        jwt.sign({ _id: user.data._id }, process.env.JWTSECRET, {
+          expiresIn: "7d",
+        })
+      );
     })
     .catch(function (error) {
       res.json("Sorry, your values are not correct.");
