@@ -90,6 +90,16 @@ exports.edit = function (req, res) {
     });
 };
 
+exports.apiDelete = function (req, res) {
+  Post.delete(req.params.id, req.apiUser._id)
+    .then(() => {
+      res.json("Success");
+    })
+    .catch(() => {
+      res.json("You do not have permision to perform that action");
+    });
+};
+
 exports.delete = function (req, res) {
   Post.delete(req.params.id, req.visitorId)
     .then(() => {
