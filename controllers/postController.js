@@ -7,6 +7,19 @@ exports.viewCreateScreen = function (req, res) {
   res.render("create-post");
 };
 
+exports.apiCreate = function (req, res) {
+  //id is saved in req object in the previous method call(userController.apiMustBeLoggedIn) in the same route("/create-post") in apiRouter.
+  let post = new Post(req.body, req.apiUser._id);
+  post
+    .create()
+    .then(function (newId) {
+      res.json("Congrats.");
+    })
+    .catch(function (errors) {
+      res.json(errors);
+    });
+};
+
 exports.create = function (req, res) {
   let post = new Post(req.body, req.session.user._id);
   post

@@ -8,6 +8,17 @@ const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 const jwt = require("jsonwebtoken");
 
+exports.apiMustBeLoggedIn = function (req, res, next) { 
+  try {
+    //storing the id from token in req object and we will use it in the next function in the route
+    req.apiUser = jwt.verify(req.body.token, process.env.JWTSECRET)
+    next()
+  } catch { 
+    res.json("Sorry, you must provide a valid token.")
+  }
+
+}
+
 exports.doesEmailExist = async function (req, res) {
   let emailBool = await User.doesEmailExist(req.body.email);
   res.json(emailBool);
